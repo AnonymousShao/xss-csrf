@@ -37,3 +37,43 @@
     htmlEncode: 某些情况下，不能对用户数据进行严格过滤，需要对标签进行转,html进行转义
     JavaScriptEncode
 ```
+
+## jwt
+```
+  JSON Web Token
+  
+  应用场景：分布式中的单点登录(SSO)来进行鉴权
+  
+  数据格式:
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.(头部: header)
+  eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.(数据: payload　)
+  TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ(签名: signature)
+  
+  header: base64转换
+  {
+    'typ': 'JWT', // 声明类型
+    'alg': 'HS256' //加密算法：常直接使用 HMAC SHA256
+  }
+  
+  payload: 标准中注册声明、公共声明、私有声明，不要存放敏感信息，base64转换
+  标准中注册声明: 面向用户、接受者、过期时间、签发时间、一次性token(防止重放攻击)
+  公有声明：一般添加用户的相关信息或其他业务需要的必要信息.
+  私有声明：提供者和消费者所共同定义的声明
+  
+  signature: 签名
+  
+  使用方法：
+   headers: {
+      'Authorization': 'Bearer ' + token
+    }
+    
+  优势：跨语言，易于后端扩展，后端只需解密
+  但是还有安全以及其他问题：(尚未深入阅读)
+    token被盗, 重放攻击
+   注销，续签，token刷新
+  https://juejin.im/post/5bbff9f7e51d450e8b1404c4
+```
+
+## jwt问题
+
+- 但是还有安全以及其他问题：(尚未深入阅读) https://juejin.im/post/5bbff9f7e51d450e8b1404c4
